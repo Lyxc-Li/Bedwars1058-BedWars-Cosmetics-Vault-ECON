@@ -1,6 +1,7 @@
 # TokensPlugin
 
 A Minecraft plugin for managing player tokens with economy integration through Vault.
+This Plugin is ai slop
 
 ## Features
 
