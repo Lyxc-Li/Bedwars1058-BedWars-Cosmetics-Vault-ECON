@@ -88,5 +88,5 @@ To build the plugin from source:
 
 - Spigot/Paper 1.8.8 or higher
 - Vault
-- MySQL database (optional, but recommended)
-- PlaceholderAPI (optional, for placeholders)
+- MySQL database
+- PlaceholderAPI
