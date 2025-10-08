@@ -1,0 +1,31 @@
+name: TokensPlugin
+main: com.example.tokens.TokensPlugin
+version: 1.0.0
+api-version: 1.8
+author: Jan
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+commands:
+  tokbalance:
+    description: Shows your token balance
+    usage: /tokbalance
+  givetokens:
+    description: Reward a player with tokens (OP only)
+    usage: /givetokens <player> <amount> [reason]
+  token:
+    description: Shows your token balance
+    usage: /token
+    aliases: [tokens]
+permissions:
+  tokens.multiplier.1.25:
+    description: 1.25x token multiplier
+    default: false
+  tokens.multiplier.1.5:
+    description: 1.5x token multiplier
+    default: false
+  tokens.multiplier.2:
+    description: 2x token multiplier
+    default: false
+  tokens.reward:
+    description: Allows rewarding players with tokens
+    default: op

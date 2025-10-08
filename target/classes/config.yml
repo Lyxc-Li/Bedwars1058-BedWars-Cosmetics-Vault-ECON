@@ -1,0 +1,9 @@
+MySQL:
+  Use: true
+  Host: 'ip'
+  Port: '3306'
+  Database: 'database_name'
+  User: 'database_user'
+  Password: 'databaseuser_password'
+Currency:
+  name: 'Token'

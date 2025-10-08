@@ -1,0 +1,4 @@
+com\example\tokens\VaultEco.class
+com\example\tokens\TokenPlaceholderExpansion.class
+com\example\tokens\TokensPlugin.class
+com\example\tokens\TokenService.class
