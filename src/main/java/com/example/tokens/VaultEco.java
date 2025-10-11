@@ -129,25 +129,50 @@ public class VaultEco extends AbstractEconomy {
     }
 
     /* ---------- Deposits/Withdrawals ---------- */
-    // We intentionally block generic deposit/withdraw operations to prevent players from transferring/withdrawing tokens
-    // Only server-side/shop logic should call TokenService.removeSync/addSync directly or use the provided API.
+    // We now allow withdrawal operations to support plugins like Cosmetics
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, "Withdrawals not allowed for tokens");
+        try {
+            UUID uuid = java.util.UUID.nameUUIDFromBytes(playerName.getBytes());
+            long actualAmount = (long) Math.ceil(amount);
+            boolean success = service.removeSync(uuid, actualAmount, "Withdrawal by " + playerName);
+            if (success) {
+                long balance = getBalanceSync(uuid);
+                return new EconomyResponse(actualAmount, balance, ResponseType.SUCCESS, "Withdrawal successful");
+            } else {
+                long balance = getBalanceSync(uuid);
+                return new EconomyResponse(0, balance, ResponseType.FAILURE, "Insufficient funds");
+            }
+        } catch (Exception e) {
+            return new EconomyResponse(0, 0, ResponseType.FAILURE, "Withdrawal error: " + e.getMessage());
+        }
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-        return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, "Withdrawals not allowed for tokens");
+        try {
+            UUID uuid = player.getUniqueId();
+            long actualAmount = (long) Math.ceil(amount);
+            boolean success = service.removeSync(uuid, actualAmount, "Withdrawal by " + player.getName());
+            if (success) {
+                long balance = getBalanceSync(uuid);
+                return new EconomyResponse(actualAmount, balance, ResponseType.SUCCESS, "Withdrawal successful");
+            } else {
+                long balance = getBalanceSync(uuid);
+                return new EconomyResponse(0, balance, ResponseType.FAILURE, "Insufficient funds");
+            }
+        } catch (Exception e) {
+            return new EconomyResponse(0, 0, ResponseType.FAILURE, "Withdrawal error: " + e.getMessage());
+        }
     }
     
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
-        return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, "Withdrawals not allowed for tokens");
+        return withdrawPlayer(playerName, amount);
     }
     
     public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
-        return new EconomyResponse(0, 0, ResponseType.NOT_IMPLEMENTED, "Withdrawals not allowed for tokens");
+        return withdrawPlayer(player, amount);
     }
 
     @Override
